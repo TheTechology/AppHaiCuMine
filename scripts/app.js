@@ -1,23 +1,21 @@
 import { saveRide, renderRideHistory } from "./rides.js";
-// scripts/app.js
 
 let map;
 let marker;
 let currentRole = null;
 
 const initMap = () => {
+  document.getElementById("map").style.display = "block";
+
   map = L.map('map').setView([45.7, 21.3], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // 🔧 FIX: Forțează redimensionarea după ce DOM-ul este afișat
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 300);
-  });
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 300);
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -45,7 +43,6 @@ const renderDriverActions = () => {
   };
 };
 
-// Setare roluri
 const btnClient = document.getElementById("btn-client");
 const btnSofer = document.getElementById("btn-sofer");
 
@@ -117,7 +114,6 @@ const createRouteForm = () => {
         <p><strong>Cost estimativ:</strong> ${cost.toFixed(2)} lei</p>
       `;
 
-      // Salvăm cursa în istoric
       import('https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js').then(({ getAuth, onAuthStateChanged }) => {
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
