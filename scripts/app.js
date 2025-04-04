@@ -12,6 +12,11 @@ const initMap = () => {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
+  // 🔧 FIX: Forțează redimensionarea corectă a hărții
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 500);
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
@@ -110,17 +115,17 @@ const createRouteForm = () => {
         <p><strong>Cost estimativ:</strong> ${cost.toFixed(2)} lei</p>
       `;
 
-    // Salvăm cursa în istoric
-    import('https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js').then(({ getAuth, onAuthStateChanged }) => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          saveRide(user.uid, `${lat1},${lon1}`, `${lat2},${lon2}`, distance, cost);
-          renderRideHistory(user.uid);
-        }
+      // Salvăm cursa în istoric
+      import('https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js').then(({ getAuth, onAuthStateChanged }) => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            saveRide(user.uid, `${lat1},${lon1}`, `${lat2},${lon2}`, distance, cost);
+            renderRideHistory(user.uid);
+          }
+        });
       });
-    });
-    
+
     } else {
       alert("Nu am putut calcula ruta.");
     }
