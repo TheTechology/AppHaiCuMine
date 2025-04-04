@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HaiCuMine</title>
-  <link rel="icon" href="favicon.ico" />
+
+  <!-- Favicon + PWA manifest -->
+  <link rel="icon" href="apple-touch-icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffcc00">
+
+  <!-- Leaflet + stiluri -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="style/main.css">
 </head>
@@ -23,7 +30,17 @@
     <div id="actions"></div>
   </section>
 
+  <!-- Leaflet + aplicația -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="scripts/app.js"></script>
+
+  <!-- PWA: service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log("✅ Service worker înregistrat"))
+        .catch(err => console.error("❌ Eroare SW:", err));
+    }
+  </script>
 </body>
 </html>
