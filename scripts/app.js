@@ -6,16 +6,18 @@ let marker;
 let currentRole = null;
 
 const initMap = () => {
-  map = L.map('map').setView([45.7, 21.3], 13); // Default center: Timișoara
+  map = L.map('map').setView([45.7, 21.3], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // 🔧 FIX: Forțează redimensionarea corectă a hărții
-  setTimeout(() => {
-    map.invalidateSize();
-  }, 500);
+  // 🔧 FIX: Forțează redimensionarea după ce DOM-ul este afișat
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
+  });
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
